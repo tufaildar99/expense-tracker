@@ -1,19 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import "./index.css";
+import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
   const [formdataArray, setformdataArray] = useState([]);
 
   function handleFormData(formdata) {
     setformdataArray([...formdataArray, formdata]);
-    console.log(formdataArray);
   }
+  function handleDelete(id) {
+    const newFormDataArray = formdataArray.filter((item) => id !== item.id);
+    setformdataArray(newFormDataArray); // Assuming setFormDataArray is the function to update the state
+  }
+
   return (
     <div className="app">
       <Header />
       <ExpenseForm handleFormData={handleFormData} />
-      <ExpenseList formdataArray={formdataArray} />
+      <ExpenseList formdataArray={formdataArray} handleDelete={handleDelete} />
       <Footer />
     </div>
   );
@@ -36,6 +41,7 @@ function ExpenseForm({ handleFormData }) {
 
     setFormdata((values) => ({
       ...values,
+      id: uuidv4(),
       [name]: value,
     }));
   }
@@ -46,22 +52,23 @@ function ExpenseForm({ handleFormData }) {
         onSubmit={(e) => {
           e.preventDefault();
           handleFormData(formdata);
+          setFormdata({});
         }}
       >
         <label>Description</label>
         <input
           type="text"
           name="description"
-          value={formdata.description}
+          value={formdata.description || ""}
           onChange={handleChange}
           required
         />
         <label>Amount</label>
         <input
-          type="text"
+          type="number"
           name="amount"
           onChange={handleChange}
-          value={formdata.amount}
+          value={formdata.amount || ""}
           required
         />
         <label>Date</label>
@@ -69,7 +76,7 @@ function ExpenseForm({ handleFormData }) {
           type="date"
           name="date"
           onChange={handleChange}
-          value={formdata.date}
+          value={formdata.date || ""}
           required
         />
         <button type="submit">Submit</button>
@@ -78,7 +85,7 @@ function ExpenseForm({ handleFormData }) {
   );
 }
 
-function ExpenseList({ formdataArray }) {
+function ExpenseList({ formdataArray, handleDelete }) {
   return (
     <div className="expense-list">
       <div className="expense-list-info">
@@ -87,9 +94,11 @@ function ExpenseList({ formdataArray }) {
       <div className="expense-list-container">
         {formdataArray.map((item) => (
           <ExpenseItem
+            id={item.id}
             description={item.description}
             amount={item.amount}
             date={item.date}
+            handleDelete={handleDelete}
           />
         ))}
       </div>
@@ -97,15 +106,22 @@ function ExpenseList({ formdataArray }) {
   );
 }
 
-function ExpenseItem({ description, amount, date }) {
+function ExpenseItem({ id, description, amount, date, handleDelete }) {
   return (
     <div className="expense-item">
       <div className="expense-item__info">
         <h4>{description}</h4>
-        <p>Amount: {amount}</p>
+        <p>Amount: ${amount}</p>
         <p>Date: {date}</p>
       </div>
-      <button className="expense-item__delete">Delete</button>
+      <button
+        onClick={() => {
+          handleDelete(id);
+        }}
+        className="expense-item__delete"
+      >
+        Delete
+      </button>
     </div>
   );
 }
