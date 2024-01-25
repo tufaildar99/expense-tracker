@@ -3,11 +3,17 @@ import { useState } from "react";
 import "./index.css";
 
 export default function App() {
+  const [formdataArray, setformdataArray] = useState([]);
+
+  function handleFormData(formdata) {
+    setformdataArray([...formdataArray, formdata]);
+    console.log(formdataArray);
+  }
   return (
     <div className="app">
       <Header />
-      <ExpenseForm />
-      <ExpenseList />
+      <ExpenseForm handleFormData={handleFormData} />
+      <ExpenseList formdataArray={formdataArray} />
       <Footer />
     </div>
   );
@@ -21,7 +27,7 @@ function Header() {
   );
 }
 
-function ExpenseForm() {
+function ExpenseForm({ handleFormData }) {
   const [formdata, setFormdata] = useState({});
 
   function handleChange(e) {
@@ -33,17 +39,15 @@ function ExpenseForm() {
       [name]: value,
     }));
   }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    alert(JSON.stringify(formdata));
-  }
-
-  console.log(formdata);
   return (
     <div className="expense-form">
       <h3>Add Expense</h3>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleFormData(formdata);
+        }}
+      >
         <label>Description</label>
         <input
           type="text"
@@ -74,26 +78,32 @@ function ExpenseForm() {
   );
 }
 
-function ExpenseList() {
+function ExpenseList({ formdataArray }) {
   return (
     <div className="expense-list">
       <div className="expense-list-info">
         <h4>Total Amount Spent : $XXX</h4>
       </div>
       <div className="expense-list-container">
-        <ExpenseItem />
+        {formdataArray.map((item) => (
+          <ExpenseItem
+            description={item.description}
+            amount={item.amount}
+            date={item.date}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-function ExpenseItem() {
+function ExpenseItem({ description, amount, date }) {
   return (
     <div className="expense-item">
       <div className="expense-item__info">
-        <h4>Groceries</h4>
-        <p>Amount: $200</p>
-        <p>Date: 2022-01-01</p>
+        <h4>{description}</h4>
+        <p>Amount: {amount}</p>
+        <p>Date: {date}</p>
       </div>
       <button className="expense-item__delete">Delete</button>
     </div>
