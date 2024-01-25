@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import Raect from "react";
+import { useState } from "react";
+import "./index.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <ExpenseForm />
     </div>
   );
 }
 
-export default App;
+function Header() {
+  return (
+    <div className="Header">
+      <h3>Expense Tracker App</h3>
+    </div>
+  );
+}
+
+function ExpenseForm() {
+  return (
+    <div className="expense-form">
+      <form>
+        <label>Description</label>
+        <input type="text" required />
+        <label>Amount</label>
+        <input type="text" required />
+        <label>Date</label>
+        <input type="date" required />
+        <button>Submit</button>
+      </form>
+    </div>
+  );
+}
