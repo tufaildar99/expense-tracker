@@ -11,15 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .expense-item {
+    flex: 0 0 calc(50% - 20px); /* adjust as needed */
+  }
+}
+
 .Header {
+  width: 100%;
   background-color: #282c34;
-  min-height: 10vh;
+  height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin-bottom: 20px;
 }
 
 .expense-form {
@@ -27,17 +39,14 @@ code {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px auto; /* Add margin here */
   width: 80%;
   max-width: 500px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background-color: #f9f9f9;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 20px;
 }
 
 .expense-form form {
@@ -72,3 +81,79 @@ code {
 .expense-form button:hover {
   background-color: #444;
 }
+
+/* CSS */
+
+.expense-list {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+/* CSS */
+
+.expense-list-info {
+  text-align: center;
+  padding: 10px;
+  color: #333;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.expense-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* align items along the start */
+  gap: 20px;
+}
+
+/* CSS */
+
+/* CSS */
+
+.expense-item {
+  flex: 0 0 calc(20% - 20px); /* decreased width of each card */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  min-height: 300px; /* adjust as needed */
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.expense-item:hover {
+  transform: scale(1.07); /* increased scale on hover */
+}
+
+.expense-item__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.expense-item__delete {
+  align-self: center;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.expense-item__delete:hover {
+  background-color: #c82333;
+}
+/* CSS */
