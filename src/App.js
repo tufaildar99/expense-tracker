@@ -1,4 +1,4 @@
-import Raect from "react";
+import React from "react";
 import { useState } from "react";
 import "./index.css";
 
@@ -22,17 +22,53 @@ function Header() {
 }
 
 function ExpenseForm() {
+  const [formdata, setFormdata] = useState({});
+
+  function handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormdata((values) => ({
+      ...values,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert(JSON.stringify(formdata));
+  }
+
+  console.log(formdata);
   return (
     <div className="expense-form">
       <h3>Add Expense</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>Description</label>
-        <input type="text" required />
+        <input
+          type="text"
+          name="description"
+          value={formdata.description}
+          onChange={handleChange}
+          required
+        />
         <label>Amount</label>
-        <input type="text" required />
+        <input
+          type="text"
+          name="amount"
+          onChange={handleChange}
+          value={formdata.amount}
+          required
+        />
         <label>Date</label>
-        <input type="date" required />
-        <button>Submit</button>
+        <input
+          type="date"
+          name="date"
+          onChange={handleChange}
+          value={formdata.date}
+          required
+        />
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
@@ -42,14 +78,9 @@ function ExpenseList() {
   return (
     <div className="expense-list">
       <div className="expense-list-info">
-        <h2>Expense List</h2>
         <h4>Total Amount Spent : $XXX</h4>
       </div>
       <div className="expense-list-container">
-        <ExpenseItem />
-        <ExpenseItem />
-        <ExpenseItem />
-        <ExpenseItem />
         <ExpenseItem />
       </div>
     </div>
