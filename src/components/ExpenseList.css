@@ -1,0 +1,27 @@
+.expense-list {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+/* CSS */
+
+.expense-list-info {
+  text-align: center;
+  padding: 10px;
+  color: #333;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.expense-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* align items along the start */
+  gap: 20px;
+}
